@@ -72,7 +72,7 @@ class ArcFaceService(MXNetModelService):
 
         dist = np.linalg.norm(f1 - f2).item()
         sim = np.dot(f1, f2.T).tolist()
-        return [{"Distance": dist, "Similarity": sim}]
+        return [{"Distance": dist, "Similarity": sim, "f1_encoding": f1}]
 
 
 def pre_process(img, bbox=None, landmark=None, **kwargs):
