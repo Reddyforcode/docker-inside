@@ -69,7 +69,7 @@ class ArcFaceService(MXNetModelService):
 
         f2 = data[1][0].asnumpy()
         f2 = preprocessing.normalize(f2).flatten()
-
+        print(f1)
         dist = np.linalg.norm(f1 - f2).item()
         sim = np.dot(f1, f2.T).tolist()
         return [{"Distance": dist, "Similarity": sim, "f1_encoding": str(f1)}]
