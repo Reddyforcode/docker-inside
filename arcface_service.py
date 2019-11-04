@@ -25,6 +25,7 @@ from sklearn import preprocessing
 from mtcnn_detector import MtcnnDetector
 from mxnet_model_service import MXNetModelService
 from skimage import transform as trans
+import time as time
 
 
 class ArcFaceService(MXNetModelService):
@@ -64,6 +65,7 @@ class ArcFaceService(MXNetModelService):
         return ret
 
     def postprocess(self, data):
+        t0 = t.time()
         f1 = data[0][0].asnumpy()
         f1 = preprocessing.normalize(f1).flatten()
 
@@ -72,29 +74,13 @@ class ArcFaceService(MXNetModelService):
       
         dist = np.linalg.norm(f1 - f2).item()
         sim = np.dot(f1, f2.T).tolist()
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-        print("imprimiremos distanci")
-
+        
         """try:
             return [{"Distance": dist, "Similarity": sim, "f1_encoding": list(f1)}]
         except:
             """
-        return [{"Distance": dist, "Similarity": sim}]
+        tf = t.time()-t0
+        return [{"Distance": dist, "Similarity": sim, "Time":tf}]
 
 
 def pre_process(img, bbox=None, landmark=None, **kwargs):
