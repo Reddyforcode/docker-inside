@@ -72,6 +72,23 @@ class ArcFaceService(MXNetModelService):
       
         dist = np.linalg.norm(f1 - f2).item()
         sim = np.dot(f1, f2.T).tolist()
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
+        print("imprimiremos distanci")
 
         """try:
             return [{"Distance": dist, "Similarity": sim, "f1_encoding": list(f1)}]
