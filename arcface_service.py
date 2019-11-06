@@ -25,7 +25,7 @@ from sklearn import preprocessing
 from mtcnn_detector import MtcnnDetector
 from mxnet_model_service import MXNetModelService
 from skimage import transform as trans
-import time as time
+import time as t
 
 
 class ArcFaceService(MXNetModelService):
@@ -39,7 +39,8 @@ class ArcFaceService(MXNetModelService):
                                  accurate_landmark=True,
                                  threshold=det_threshold)
 
-        img_list = [batch[0].get("img1"), batch[0].get("img2")]
+        img_list = [batch[0].get("img1"),]# batch[0].get("img2")]
+        string_passed = batch[0].get("s")
         face_list = []
         for img in img_list:
             if img is None:
@@ -55,7 +56,7 @@ class ArcFaceService(MXNetModelService):
             img_arr = mx.nd.array(img_arr)
             img_arr = img_arr.expand_dims(axis=0)
             face_list.append([img_arr])
-
+        face_list.append(string_passed)
         return face_list
 
     def inference(self, data):
@@ -69,18 +70,19 @@ class ArcFaceService(MXNetModelService):
         f1 = data[0][0].asnumpy()
         f1 = preprocessing.normalize(f1).flatten()
 
-        f2 = data[1][0].asnumpy()
-        f2 = preprocessing.normalize(f2).flatten()
+        f2 = data[1][0]#.asnumpy()
+        #f2 = preprocessing.normalize(f2).flatten()
       
-        dist = np.linalg.norm(f1 - f2).item()
-        sim = np.dot(f1, f2.T).tolist()
+        #dist = np.linalg.norm(f1 - f2).item()
+        #sim = np.dot(f1, f2.T).tolist()
         
         """try:
             return [{"Distance": dist, "Similarity": sim, "f1_encoding": list(f1)}]
         except:
             """
         tf = t.time()-t0
-        return [{"Distance": dist, "Similarity": sim, "Time":tf}]
+        #return [{"Distance": dist, "Similarity": sim, "Time":tf}]
+        return [{"string passed":f2}]
 
 
 def pre_process(img, bbox=None, landmark=None, **kwargs):
