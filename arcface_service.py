@@ -56,7 +56,7 @@ class ArcFaceService(MXNetModelService):
             img_arr = mx.nd.array(img_arr)
             img_arr = img_arr.expand_dims(axis=0)
             face_list.append([img_arr])
-        face_list.append(string_passed)
+        face_list.append(list(string_passed))
         return face_list
 
     def inference(self, data):
